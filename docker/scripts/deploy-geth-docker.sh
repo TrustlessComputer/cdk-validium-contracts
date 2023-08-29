@@ -12,6 +12,6 @@ npx hardhat run deployment/3_deployContracts.js --network localhost
 mkdir docker/deploymentOutput
 mv deployment/deploy_output.json docker/deploymentOutput
 docker-compose -f docker/docker-compose.geth.yml down
-sudo docker build -t hermeznetwork/geth-cdk-validium-contracts -f docker/Dockerfile.geth .
+sudo docker build -t snapchain/geth-cdk-validium-contracts -f docker/Dockerfile.geth .
 # Let it readable for the multiplatform build coming later!
 sudo chmod -R go+rxw docker/gethData

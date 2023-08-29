@@ -1,0 +1,52 @@
+version: "3.5"
+networks:
+  default:
+    name: zk-validium
+services:
+  cdk-validium-mock-l1-network:
+    container_name: cdk-validium-mock-l1-network
+    image: snapchain/geth-cdk-validium-contracts
+    ports:
+      - 8545:8545
+      - 8546:8546
+    volumes:
+      - deploy-output:/deploymentOutput
+    command:
+      - "--http"
+      - "--http.api"
+      - "admin,eth,debug,miner,net,txpool,personal,web3"
+      - "--http.addr"
+      - "0.0.0.0"
+      - "--http.corsdomain"
+      - "*"
+      - "--http.vhosts"
+      - "*"
+      - "--ws"
+      - "--ws.origins"
+      - "*"
+      - "--ws.addr"
+      - "0.0.0.0"
+      - "--dev"
+      - "--dev.period"
+      - "1"
+      - "--datadir"
+      - "/geth_data"
+      - "--syncmode"
+      - "full"
+      - "--rpc.allow-unprotected-txs"
+
+  dac-setup-committee:
+    container_name: dac-setup-committee
+    image: snapchain/dac-setup-committee
+    depends_on:
+      cdk-validium-mock-l1-network:
+        condition: service_started
+    volumes:
+      - deploy-output:/shared
+    environment:
+      - JSONRPC_HTTP_URL=http://cdk-validium-mock-l1-network:8545
+      - DAC_URL=http://cdk-validium-data-availability:8444
+      - DAC_ADDRESS=0x70997970c51812dc3a010c7d01b50e0d17dc79c8
+
+volumes:
+  deploy-output:
