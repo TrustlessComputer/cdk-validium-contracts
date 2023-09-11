@@ -1,0 +1,19 @@
+version: "3.3"
+services:
+  cdk-validium-deploy-sepolia:
+    container_name: cdk-validium-deploy-sepolia
+    image: snapchain/cdk-validium-contracts
+    volumes:
+      - ../deployment/deploy_parameters.json:/cdk-validium-contracts/deployment/deploy_parameters.json
+      - deploy-output:/cdk-validium-contracts/deploymentOutput
+    environment:
+      - MNEMONIC=<deployer-mnemonic>
+      - INFURA_PROJECT_ID=<deployer-infura-project-id>
+      - HARDHAT_NETWORK=sepolia
+    command:
+      - "/bin/sh"
+      - "-c"
+      - "npm run deploy:deployer:CDKValidium:sepolia && npm run deploy:testnet:CDKValidium:sepolia"
+
+volumes:
+  deploy-output:

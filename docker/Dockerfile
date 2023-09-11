@@ -9,9 +9,7 @@ COPY package*.json ./
 # Install cdk-validium-contracts dependencies
 RUN npm install
 
-# Copy the needed files
-COPY node_modules/ node_modules/
-COPY compiled-contracts/CDKDataCommittee.json compiled-contracts/
-COPY docker/scripts/setup-committee.js docker/scripts/
+# Copy the entire cdk-validium-contracts
+COPY . .
 
-CMD ["npm", "run", "setup:committee"]
+CMD ["/bin/sh"]

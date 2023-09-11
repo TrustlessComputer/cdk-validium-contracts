@@ -1,7 +1,3 @@
-version: "3.5"
-networks:
-  default:
-    name: zk-validium
 services:
   cdk-validium-mock-l1-network:
     container_name: cdk-validium-mock-l1-network
@@ -37,7 +33,7 @@ services:
 
   dac-setup-committee:
     container_name: dac-setup-committee
-    image: snapchain/dac-setup-committee
+    image: snapchain/cdk-validium-contracts
     depends_on:
       cdk-validium-mock-l1-network:
         condition: service_started
@@ -47,6 +43,10 @@ services:
       - JSONRPC_HTTP_URL=http://cdk-validium-mock-l1-network:8545
       - DAC_URL=http://cdk-validium-data-availability:8444
       - DAC_ADDRESS=0x70997970c51812dc3a010c7d01b50e0d17dc79c8
+    command:
+      - "/bin/sh"
+      - "-c"
+      - "npm run setup:committee" 
 
 volumes:
   deploy-output:
