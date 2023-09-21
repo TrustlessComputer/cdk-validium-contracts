@@ -6,9 +6,9 @@ const fs = require('fs');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const { argv } = require('yargs');
 
-const DEFAULT_MNEMONIC = 'test test test test test test test test test test test junk';
+// const DEFAULT_MNEMONIC = 'test test test test test test test test test test test junk';
 process.env.HARDHAT_NETWORK = 'hardhat';
-process.env.MNEMONIC = argv.test ? DEFAULT_MNEMONIC : process.env.MNEMONIC;
+// process.env.MNEMONIC = argv.test ? DEFAULT_MNEMONIC : process.env.MNEMONIC;
 const { ethers, upgrades } = require('hardhat');
 const {
     MemDB, ZkEVMDB, getPoseidon, smtUtils,

@@ -11,7 +11,7 @@ async function main() {
     if (upgradeParameters.multiplierGas) {
         if (process.env.HARDHAT_NETWORK !== 'hardhat') {
             const multiplierGas = upgradeParameters.multiplierGas;
-            currentProvider = new ethers.providers.JsonRpcProvider(`https://${process.env.HARDHAT_NETWORK}.infura.io/v3/${process.env.INFURA_PROJECT_ID}`);
+            currentProvider = new ethers.providers.JsonRpcProvider(`${process.env.L1_RPC}`);
             async function overrideFeeData() {
                 const feedata = await ethers.provider.getFeeData();
                 return {

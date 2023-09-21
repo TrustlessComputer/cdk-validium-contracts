@@ -65,7 +65,7 @@ async function create2Deployment(cdkValidiumDeployerContract, salt, deployTransa
     const amount = 0;
 
     if (await deployer.provider.getCode(precalculatedAddressDeployed) !== '0x') {
-        return [precalculatedAddressDeployed, false];
+        return [precalculatedAddressDeployed, true];
     }
 
     if (dataCall) {
@@ -96,7 +96,7 @@ async function create2Deployment(cdkValidiumDeployerContract, salt, deployTransa
             await (await cdkValidiumDeployerContract.deployDeterministic(amount, salt, deployTransaction)).wait();
         }
     }
-    return [precalculatedAddressDeployed, true];
+    return [precalculatedAddressDeployed, false];
 }
 
 module.exports = {

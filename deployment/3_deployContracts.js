@@ -90,7 +90,7 @@ async function main() {
     let currentProvider = ethers.provider;
     if (deployParameters.multiplierGas || deployParameters.maxFeePerGas) {
         if (process.env.HARDHAT_NETWORK !== 'hardhat') {
-            currentProvider = new ethers.providers.JsonRpcProvider(`https://${process.env.HARDHAT_NETWORK}.infura.io/v3/${process.env.INFURA_PROJECT_ID}`);
+            currentProvider = new ethers.providers.JsonRpcProvider(`${process.env.L1_RPC}`);
             if (deployParameters.maxPriorityFeePerGas && deployParameters.maxFeePerGas) {
                 console.log(`Hardcoded gas used: MaxPriority${deployParameters.maxPriorityFeePerGas} gwei, MaxFee${deployParameters.maxFeePerGas} gwei`);
                 const FEE_DATA = {
@@ -222,6 +222,10 @@ async function main() {
      * + 1 (deploy data comittee proxy) + 1(impl data committee) + setupCommitte? = +4 or +5
      */
     const nonceDelta = 4 + (setupEmptyCommittee ? 1 : 0);
+
+    console.log('\n#######################');
+    console.log("nonce: ",Number((await ethers.provider.getTransactionCount(deployer.address))),nonceDelta)
+    console.log('\n#######################');
     const nonceProxyGlobalExitRoot = Number((await ethers.provider.getTransactionCount(deployer.address)))
         + nonceDelta;
     // nonceProxyCDKValidium :Nonce globalExitRoot + 1 (proxy globalExitRoot) + 1 (impl cdk) = +2
