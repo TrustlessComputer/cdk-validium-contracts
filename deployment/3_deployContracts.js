@@ -584,7 +584,17 @@ async function main() {
         salt,
         version,
     };
+    const l1Config = {
+        chainId: chainID,
+        cdkValidiumAddress: cdkValidiumContract.address,
+        maticTokenAddress: maticTokenAddress,
+        polygonZkEVMGlobalExitRootAddress: PolygonZkEVMGlobalExitRoot.address,
+        cdkDataCommitteeContract: cdkDataCommitteeContract.address,
+    };
+    genesis.l1Config = l1Config;
+    genesis.genesisBlockNumber = deploymentBlockNumber;
     fs.writeFileSync(pathOutputJson, JSON.stringify(outputJson, null, 1));
+    fs.writeFileSync(path.join(__dirname, '../genesis.json'), JSON.stringify(genesis, null, 1));
 
     // Remove ongoing deployment
     fs.unlinkSync(pathOngoingDeploymentJson);
