@@ -597,7 +597,7 @@ async function main() {
     fs.writeFileSync(path.join(__dirname, './genesis.json'), JSON.stringify(genesis, null, 1));
 
     var bridgeConf = ""
-    fs.readFile("./to_be_gen/bridge.config.toml.example", 'utf8', function (err,data) {
+    fs.readFile(path.join(__dirname,"./to_be_gen/bridge.config.toml.example"), 'utf8', function (err,data) {
         if (err) {
           return console.log(err);
         }
