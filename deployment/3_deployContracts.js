@@ -596,6 +596,20 @@ async function main() {
     fs.writeFileSync(pathOutputJson, JSON.stringify(outputJson, null, 1));
     fs.writeFileSync(path.join(__dirname, './genesis.json'), JSON.stringify(genesis, null, 1));
 
+    var bridgeConf = ""
+    fs.readFile("./to_be_gen/bridge.config.toml.example", 'utf8', function (err,data) {
+        if (err) {
+          return console.log(err);
+        }
+        bridgeConf = data
+      });
+    bridgeConf = bridgeConf.replace("%GEN_BLOCK_NUMBER%", deploymentBlockNumber)
+    bridgeConf = bridgeConf.replace("%POLYGON_BRIDGE_ADDRESS%", process.env.L1_RPC) //TODO:
+    bridgeConf = bridgeConf.replace("%POLYGON_ZK_EVM_GLOBAL_EXIT_ROOT_ADDRESS%",PolygonZkEVMGlobalExitRoot.address)
+    bridgeConf = bridgeConf.replace("%L2_POLYGON_BRIDGE_ADDRESS%", process.env.L1_RPC) //TODO:
+
+    fs.writeFileSync(path.join(__dirname, './/bridge.config.toml'), bridgeConf);
+
     // Remove ongoing deployment
     fs.unlinkSync(pathOngoingDeploymentJson);
 }

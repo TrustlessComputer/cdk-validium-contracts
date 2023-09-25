@@ -1,0 +1,53 @@
+[Log]
+Level = "debug"
+Outputs = ["stdout"]
+
+[SyncDB]
+Database = "postgres"
+User = "test_user"
+Password = "test_password"
+Name = "test_db"
+Host = "zkevm-bridge-db"
+Port = "5432"
+MaxConns = 200
+
+[ClaimTxManager]
+Enabled = true
+FrequencyToMonitorTxs = "1s"
+PrivateKey = { Path = "/pk/keystore.claimtxmanager", Password = "testonly" }
+RetryInterval = "1s"
+RetryNumber = 10
+
+[Etherman]
+L1URL = "%L1_RPC%"
+L2URLs = ["http://cdk-validium-json-rpc:8123"]
+
+[Synchronizer]
+SyncInterval = "1s"
+SyncChunkSize = 100
+
+[BridgeController]
+Store = "postgres"
+Height = 32
+
+[BridgeServer]
+GRPCPort = "9090"
+HTTPPort = "8080"
+CacheSize = 100000
+DefaultPageLimit = 25
+MaxPageLimit = 100
+BridgeVersion = "v1"
+[BridgeServer.DB]
+Database = "postgres"
+User = "test_user"
+Password = "test_password"
+Name = "test_db"
+Host = "zkevm-bridge-db"
+Port = "5432"
+MaxConns = 200
+
+[NetworkConfig]
+GenBlockNumber = %GEN_BLOCK_NUMBER%
+PolygonBridgeAddress = "%POLYGON_BRIDGE_ADDRESS%"
+PolygonZkEVMGlobalExitRootAddress = "%POLYGON_ZK_EVM_GLOBAL_EXIT_ROOT_ADDRESS%"
+L2PolygonBridgeAddresses = ["%L2_POLYGON_BRIDGE_ADDRESS%"]
