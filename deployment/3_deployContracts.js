@@ -608,7 +608,7 @@ async function main() {
     bridgeConf = bridgeConf.replace("%POLYGON_ZK_EVM_GLOBAL_EXIT_ROOT_ADDRESS%",PolygonZkEVMGlobalExitRoot.address)
     bridgeConf = bridgeConf.replace("%L2_POLYGON_BRIDGE_ADDRESS%", process.env.L1_RPC) //TODO:
 
-    fs.writeFileSync(path.join(__dirname, './/bridge.config.toml'), bridgeConf);
+    fs.writeFileSync(path.join(__dirname, './bridge.config.toml'), bridgeConf);
 
     // Remove ongoing deployment
     fs.unlinkSync(pathOngoingDeploymentJson);
