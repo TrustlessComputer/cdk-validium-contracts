@@ -604,9 +604,9 @@ async function main() {
         bridgeConf = data
       });
     bridgeConf = bridgeConf.replace("%GEN_BLOCK_NUMBER%", deploymentBlockNumber)
-    bridgeConf = bridgeConf.replace("%POLYGON_BRIDGE_ADDRESS%", process.env.L1_RPC) //TODO:
+    bridgeConf = bridgeConf.replace("%POLYGON_BRIDGE_ADDRESS%", PolygonZkEVMBridgeContract.address) 
     bridgeConf = bridgeConf.replace("%POLYGON_ZK_EVM_GLOBAL_EXIT_ROOT_ADDRESS%",PolygonZkEVMGlobalExitRoot.address)
-    bridgeConf = bridgeConf.replace("%L2_POLYGON_BRIDGE_ADDRESS%", process.env.L1_RPC) //TODO:
+    bridgeConf = bridgeConf.replace("%L2_POLYGON_BRIDGE_ADDRESS%", PolygonZkEVMBridgeContract.address) 
 
     fs.writeFileSync(path.join(__dirname, './bridge.config.toml'), bridgeConf);
 
