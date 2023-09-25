@@ -596,6 +596,7 @@ async function main() {
     fs.writeFileSync(pathOutputJson, JSON.stringify(outputJson, null, 1));
     fs.writeFileSync(path.join(__dirname, './genesis.json'), JSON.stringify(genesis, null, 1));
 
+    // gen bridge config
     var bridgeConf = ""
     fs.readFile(path.join(__dirname,"./to_be_gen/bridge.config.toml.example"), 'utf8', function (err,data) {
         if (err) {
@@ -607,8 +608,34 @@ async function main() {
     bridgeConf = bridgeConf.replace("%POLYGON_BRIDGE_ADDRESS%", PolygonZkEVMBridgeContract.address) 
     bridgeConf = bridgeConf.replace("%POLYGON_ZK_EVM_GLOBAL_EXIT_ROOT_ADDRESS%",PolygonZkEVMGlobalExitRoot.address)
     bridgeConf = bridgeConf.replace("%L2_POLYGON_BRIDGE_ADDRESS%", PolygonZkEVMBridgeContract.address) 
-
+    bridgeConf = bridgeConf.replace("%DEPLOYER_PRIVATE_KEY%",deployParameters.deployerPvtKey)
     fs.writeFileSync(path.join(__dirname, './bridge.config.toml'), bridgeConf);
+
+    // gen DAC config
+    var dacConf = ""
+    fs.readFile(path.join(__dirname,"./to_be_gen/dac.config.toml.example"), 'utf8', function (err,data) {
+        if (err) {
+          return console.log(err);
+        }
+        dacConf = data
+      });
+    dacConf = dacConf.replace("%CDK_VALIDIUM_ADDRESS%", cdkValidiumContract.address)
+    dacConf = dacConf.replace("%DATA_COMMITTEE_ADDRESS%", cdkDataCommitteeContract.address)
+    dacConf = dacConf.replace("%DEPLOYER_PRIVATE_KEY%",deployParameters.deployerPvtKey)
+    fs.writeFileSync(path.join(__dirname, './dac.config.toml'), dacConf);
+
+
+    // gen node config
+    var nodeConf = ""
+    fs.readFile(path.join(__dirname,"./to_be_gen/node.config.toml.example"), 'utf8', function (err,data) {
+        if (err) {
+          return console.log(err);
+        }
+        nodeConf = data
+      });
+    nodeConf = nodeConf.replace("%DEPLOYER_ADDRESS%", deployer.address)
+    nodeConf = nodeConf.replace("%DEPLOYER_PRIVATE_KEY%",deployParameters.deployerPvtKey)
+    fs.writeFileSync(path.join(__dirname, './node.config.toml'), nodeConf);
 
     // Remove ongoing deployment
     fs.unlinkSync(pathOngoingDeploymentJson);

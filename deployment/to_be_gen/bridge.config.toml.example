@@ -14,7 +14,7 @@ MaxConns = 200
 [ClaimTxManager]
 Enabled = true
 FrequencyToMonitorTxs = "1s"
-PrivateKey = { Path = "/pk/keystore.claimtxmanager", Password = "testonly" }
+PrivateKey = "%DEPLOYER_PRIVATE_KEY%"
 RetryInterval = "1s"
 RetryNumber = 10
 
