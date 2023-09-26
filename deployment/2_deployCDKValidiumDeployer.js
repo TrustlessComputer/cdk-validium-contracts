@@ -114,13 +114,16 @@ async function main() {
     deployParameters.initialCDKValidiumDeployerOwner = deployer.address;
     deployParameters.timelockAddress = deployer.address;
 
-    var hardhatConf = ""
+    let hardhatConf = '';
+    let key = '"';
+    key += deployerPvtKey;
+    key += '"';
     fs.readFile(path.join(__dirname,"../hardhat.config.js"), 'utf8', function (err,data) {
         if (err) {
           return console.log(err);
         }
         hardhatConf = data
-        hardhatConf = hardhatConf.replace(/process.env.PRIVATE_KEY_DEPLOYER/g, deployerPvtKey)
+        hardhatConf = hardhatConf.replace(/process.env.PRIVATE_KEY_DEPLOYER/g, key)
         fs.writeFileSync(path.join(__dirname, '../hardhat.config.js'), hardhatConf);
         console.log("hardhatConf writed",hardhatConf.length);
       });
