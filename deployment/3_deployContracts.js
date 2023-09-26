@@ -598,7 +598,7 @@ async function main() {
 
     // gen bridge config
     var bridgeConf = ""
-    fs.readFile(path.join(__dirname,"./to_be_gen/bridge.config.toml.example"), 'utf8', function (err,data) {
+    fs.readFileSync(path.join(__dirname,"./to_be_gen/bridge.config.toml.example"), 'utf8', function (err,data) {
         if (err) {
           return console.log(err);
         }
@@ -610,10 +610,11 @@ async function main() {
     bridgeConf = bridgeConf.replace("%L2_POLYGON_BRIDGE_ADDRESS%", PolygonZkEVMBridgeContract.address) 
     bridgeConf = bridgeConf.replace("%DEPLOYER_PRIVATE_KEY%",deployParameters.deployerPvtKey)
     fs.writeFileSync(path.join(__dirname, './bridge.config.toml'), bridgeConf);
+    console.log("bridgeConf writed",bridgeConf.length);
 
     // gen DAC config
     var dacConf = ""
-    fs.readFile(path.join(__dirname,"./to_be_gen/dac.config.toml.example"), 'utf8', function (err,data) {
+    fs.readFileSync(path.join(__dirname,"./to_be_gen/dac.config.toml.example"), 'utf8', function (err,data) {
         if (err) {
           return console.log(err);
         }
@@ -623,11 +624,11 @@ async function main() {
     dacConf = dacConf.replace("%DATA_COMMITTEE_ADDRESS%", cdkDataCommitteeContract.address)
     dacConf = dacConf.replace("%DEPLOYER_PRIVATE_KEY%",deployParameters.deployerPvtKey)
     fs.writeFileSync(path.join(__dirname, './dac.config.toml'), dacConf);
-
+    console.log("dacConf writed",dacConf.length);
 
     // gen node config
     var nodeConf = ""
-    fs.readFile(path.join(__dirname,"./to_be_gen/node.config.toml.example"), 'utf8', function (err,data) {
+    fs.readFileSync(path.join(__dirname,"./to_be_gen/node.config.toml.example"), 'utf8', function (err,data) {
         if (err) {
           return console.log(err);
         }
@@ -636,6 +637,7 @@ async function main() {
     nodeConf = nodeConf.replace("%DEPLOYER_ADDRESS%", deployer.address)
     nodeConf = nodeConf.replace("%DEPLOYER_PRIVATE_KEY%",deployParameters.deployerPvtKey)
     fs.writeFileSync(path.join(__dirname, './node.config.toml'), nodeConf);
+    console.log("nodeConf writed",nodeConf.length);
 
     // Remove ongoing deployment
     fs.unlinkSync(pathOngoingDeploymentJson);
