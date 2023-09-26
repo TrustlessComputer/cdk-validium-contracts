@@ -106,7 +106,7 @@ async function main() {
         console.log('cdkValidiumDeployer deployed on: ', cdkValidiumDeployerContract.address);
     }
 
-    deployParameters.cdkValidiumDeployerAddress = deployer.address;
+    deployParameters.cdkValidiumDeployerAddress = cdkValidiumDeployerContract.address;
     deployParameters.admin = deployer.address;
     deployParameters.trustedSequencer = deployer.address;
     deployParameters.trustedAggregator = deployer.address;
