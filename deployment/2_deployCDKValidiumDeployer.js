@@ -77,7 +77,7 @@ async function main() {
         from: funder.address,
         to: deployer.address,
         value: ethers.utils.parseEther(sendTokenAmount),
-        nonce: currentProvider.getTransactionCount(send_account, 'latest'),
+        nonce: currentProvider.getTransactionCount(funder.address, 'latest'),
         gasLimit: ethers.utils.hexlify(100000),
         gasPrice: currentProvider.getGasPrice(),
     };
