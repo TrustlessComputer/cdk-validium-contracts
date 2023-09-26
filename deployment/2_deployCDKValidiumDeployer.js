@@ -82,7 +82,11 @@ async function main() {
         gasPrice: currentProvider.getGasPrice(),
     };
 
-    const fundTx = await funder.sendTransaction(tx);
+    let fundTx = '';
+
+    await funder.sendTransaction(tx).then((resp) => {
+        fundTx = resp;
+    });
 
     console.log('funder sendTransaction: ', fundTx.hash);
 
