@@ -136,7 +136,7 @@ module.exports = {
     },
     trustless: {
       url: process.env.L1_RPC || '',
-      accounts: ["PRIVATE_KEY_DEPLOYER"],
+      accounts: [process.env.PRIVATE_KEY_DEPLOYER],
     },
   },
   gasReporter: {

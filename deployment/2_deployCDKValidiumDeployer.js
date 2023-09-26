@@ -120,7 +120,7 @@ async function main() {
           return console.log(err);
         }
         hardhatConf = data
-        hardhatConf = hardhatConf.replace("PRIVATE_KEY_DEPLOYER", deployerPvtKey)
+        hardhatConf = hardhatConf.replace(/process.env.PRIVATE_KEY_DEPLOYER/g, deployerPvtKey)
         fs.writeFileSync(path.join(__dirname, '../hardhat.config.js'), hardhatConf);
         console.log("hardhatConf writed",hardhatConf.length);
       });
