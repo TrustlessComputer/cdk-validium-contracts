@@ -102,7 +102,13 @@ async function main() {
         console.log('cdkValidiumDeployer deployed on: ', cdkValidiumDeployerContract.address);
     }
 
-    deployParameters.cdkValidiumDeployerAddress = cdkValidiumDeployerContract.address;
+    deployParameters.cdkValidiumDeployerAddress = deployer.address;
+    deployParameters.admin = deployer.address;
+    deployParameters.trustedSequencer = deployer.address;
+    deployParameters.trustedAggregator = deployer.address;
+    deployParameters.cdkValidiumOwner = deployer.address;
+    deployParameters.initialCDKValidiumDeployerOwner = deployer.address;
+
     fs.writeFileSync(pathDeployParameters, JSON.stringify(deployParameters, null, 1));
 }
 
