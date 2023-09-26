@@ -598,7 +598,7 @@ async function main() {
 
     // gen bridge config
     var bridgeConf = ""
-    fs.readFileSync(path.join(__dirname,"./to_be_gen/bridge.config.toml.example"), 'utf8', function (err,data) {
+    fs.readFile(path.join(__dirname,"./to_be_gen/bridge.config.toml.example"), 'utf8', function (err,data) {
         if (err) {
           return console.log(err);
         }
@@ -614,7 +614,7 @@ async function main() {
 
     // gen DAC config
     var dacConf = ""
-    fs.readFileSync(path.join(__dirname,"./to_be_gen/dac.config.toml.example"), 'utf8', function (err,data) {
+    fs.readFile(path.join(__dirname,"./to_be_gen/dac.config.toml.example"), 'utf8', function (err,data) {
         if (err) {
           return console.log(err);
         }
@@ -628,7 +628,7 @@ async function main() {
 
     // gen node config
     var nodeConf = ""
-    fs.readFileSync(path.join(__dirname,"./to_be_gen/node.config.toml.example"), 'utf8', function (err,data) {
+    fs.readFile(path.join(__dirname,"./to_be_gen/node.config.toml.example"), 'utf8', function (err,data) {
         if (err) {
           return console.log(err);
         }
