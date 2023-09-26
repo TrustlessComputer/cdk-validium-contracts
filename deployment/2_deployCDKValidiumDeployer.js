@@ -82,12 +82,12 @@ async function main() {
         gasPrice: currentProvider.getGasPrice(),
     };
 
-    let fundTx = '';
+    const fundTx = await funder.sendTransaction(tx);
+    const receipt = await tx.wait();
 
-    await funder.sendTransaction(tx).then((resp) => {
-        fundTx = resp;
-    });
-
+    if (receipt.status !== 1) {
+        throw new Error('Transaction failed');
+    }
     console.log('funder sendTransaction: ', fundTx.hash);
 
     initialCDKValidiumDeployerOwner = deployer.address;
