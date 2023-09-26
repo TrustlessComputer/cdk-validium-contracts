@@ -1,4 +1,4 @@
-PrivateKey = "%DEPLOYER_PRIVATE_KEY%"
+PrivateKey = {Path = "/pk/test-member.keystore", Password = "test"}
 
 [L1]
 WsURL = "wss://tc-node-auto.regtest.trustless.computer/ws"

@@ -99,7 +99,7 @@ WaitPeriodSendSequence = "15s"
 LastBatchVirtualizationTimeMaxWaitPeriod = "10s"
 MaxTxSizeForL1 = 131072
 L2Coinbase = "%DEPLOYER_ADDRESS%"
-PrivateKey = "%DEPLOYER_PRIVATE_KEY%"
+PrivateKey = { Path = "/pk/sequencer.keystore", Password = "test" }
 
 [Aggregator]
 Host = "0.0.0.0"
@@ -116,7 +116,8 @@ GeneratingProofCleanupThreshold = "10m"
 [EthTxManager]
 ForcedGas = 0
 PrivateKeys = [
-	"%DEPLOYER_PRIVATE_KEY%","%DEPLOYER_PRIVATE_KEY%"
+	{ Path = "/pk/sequencer.keystore", Password = "test" },
+	{ Path = "/pk/aggregator.keystore", Password = "test" },
 ]
 
 [L2GasPriceSuggester]
