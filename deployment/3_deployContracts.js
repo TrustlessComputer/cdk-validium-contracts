@@ -603,14 +603,14 @@ async function main() {
           return console.log(err);
         }
         bridgeConf = data
+        bridgeConf = bridgeConf.replace("%GEN_BLOCK_NUMBER%", deploymentBlockNumber)
+        bridgeConf = bridgeConf.replace("%POLYGON_BRIDGE_ADDRESS%", PolygonZkEVMBridgeContract.address) 
+        bridgeConf = bridgeConf.replace("%POLYGON_ZK_EVM_GLOBAL_EXIT_ROOT_ADDRESS%",PolygonZkEVMGlobalExitRoot.address)
+        bridgeConf = bridgeConf.replace("%L2_POLYGON_BRIDGE_ADDRESS%", PolygonZkEVMBridgeContract.address) 
+        bridgeConf = bridgeConf.replace("%DEPLOYER_PRIVATE_KEY%",deployParameters.deployerPvtKey)
+        fs.writeFileSync(path.join(__dirname, './bridge.config.toml'), bridgeConf);
+        console.log("bridgeConf writed",bridgeConf.length);
       });
-    bridgeConf = bridgeConf.replace("%GEN_BLOCK_NUMBER%", deploymentBlockNumber)
-    bridgeConf = bridgeConf.replace("%POLYGON_BRIDGE_ADDRESS%", PolygonZkEVMBridgeContract.address) 
-    bridgeConf = bridgeConf.replace("%POLYGON_ZK_EVM_GLOBAL_EXIT_ROOT_ADDRESS%",PolygonZkEVMGlobalExitRoot.address)
-    bridgeConf = bridgeConf.replace("%L2_POLYGON_BRIDGE_ADDRESS%", PolygonZkEVMBridgeContract.address) 
-    bridgeConf = bridgeConf.replace("%DEPLOYER_PRIVATE_KEY%",deployParameters.deployerPvtKey)
-    fs.writeFileSync(path.join(__dirname, './bridge.config.toml'), bridgeConf);
-    console.log("bridgeConf writed",bridgeConf.length);
 
     // gen DAC config
     var dacConf = ""
@@ -619,12 +619,12 @@ async function main() {
           return console.log(err);
         }
         dacConf = data
+        dacConf = dacConf.replace("%CDK_VALIDIUM_ADDRESS%", cdkValidiumContract.address)
+        dacConf = dacConf.replace("%DATA_COMMITTEE_ADDRESS%", cdkDataCommitteeContract.address)
+        dacConf = dacConf.replace("%DEPLOYER_PRIVATE_KEY%",deployParameters.deployerPvtKey)
+        fs.writeFileSync(path.join(__dirname, './dac.config.toml'), dacConf);
+        console.log("dacConf writed",dacConf.length);
       });
-    dacConf = dacConf.replace("%CDK_VALIDIUM_ADDRESS%", cdkValidiumContract.address)
-    dacConf = dacConf.replace("%DATA_COMMITTEE_ADDRESS%", cdkDataCommitteeContract.address)
-    dacConf = dacConf.replace("%DEPLOYER_PRIVATE_KEY%",deployParameters.deployerPvtKey)
-    fs.writeFileSync(path.join(__dirname, './dac.config.toml'), dacConf);
-    console.log("dacConf writed",dacConf.length);
 
     // gen node config
     var nodeConf = ""
@@ -633,11 +633,11 @@ async function main() {
           return console.log(err);
         }
         nodeConf = data
+        nodeConf = nodeConf.replace("%DEPLOYER_ADDRESS%", deployer.address)
+        nodeConf = nodeConf.replace("%DEPLOYER_PRIVATE_KEY%",deployParameters.deployerPvtKey)
+        fs.writeFileSync(path.join(__dirname, './node.config.toml'), nodeConf);
+        console.log("nodeConf writed",nodeConf.length);
       });
-    nodeConf = nodeConf.replace("%DEPLOYER_ADDRESS%", deployer.address)
-    nodeConf = nodeConf.replace("%DEPLOYER_PRIVATE_KEY%",deployParameters.deployerPvtKey)
-    fs.writeFileSync(path.join(__dirname, './node.config.toml'), nodeConf);
-    console.log("nodeConf writed",nodeConf.length);
 
     // Remove ongoing deployment
     fs.unlinkSync(pathOngoingDeploymentJson);
