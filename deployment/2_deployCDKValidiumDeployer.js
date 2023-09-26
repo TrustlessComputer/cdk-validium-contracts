@@ -112,6 +112,7 @@ async function main() {
     deployParameters.trustedAggregator = deployer.address;
     deployParameters.cdkValidiumOwner = deployer.address;
     deployParameters.initialCDKValidiumDeployerOwner = deployer.address;
+    deployParameters.timelockAddress = deployer.address;
 
     fs.writeFileSync(pathDeployParameters, JSON.stringify(deployParameters, null, 1));
 }
