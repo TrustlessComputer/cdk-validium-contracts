@@ -31,7 +31,8 @@
   "license": "pending",
   "dependencies": {
     "chai": "^4.3.7",
-    "ethers": "^5.7.2"
+    "ethers": "^5.7.2",
+    "keythereum": "^2.0.0"
   },
   "devDependencies": {
     "@0xpolygonhermez/zkevm-commonjs": "github:0xPolygonHermez/zkevm-commonjs#develop",
@@ -59,7 +60,7 @@
     "solidity-docgen": "^0.5.17"
   },
   "scripts": {
-    "saveDeployment:trustless": "mkdir -p deployments/trustless_$(date +%s) && cp -r deployment/deploy_*.json deployments/trustless_$(date +%s) && cp .openzeppelin/unknown-*.json deployments/trustless_$(date +%s)/trustless.json && cp deployment/genesis.json deployments/trustless_$(date +%s) && mkdir -p deploymentOutput && cp deployment/deploy_*.json deploymentOutput && cp deployment/genesis.json deploymentOutput && cp deployment/bridge.config.toml deploymentOutput && cp deployment/dac.config.toml deploymentOutput && cp deployment/node.config.toml deploymentOutput",
+    "saveDeployment:trustless": "mkdir -p deployments/trustless_$(date +%s) && cp -r deployment/deploy_*.json deployments/trustless_$(date +%s) && cp .openzeppelin/unknown-*.json deployments/trustless_$(date +%s)/trustless.json && cp deployment/genesis.json deployments/trustless_$(date +%s) && mkdir -p deploymentOutput && cp deployment/deploy_*.json deploymentOutput && cp deployment/genesis.json deploymentOutput && cp deployment/bridge.config.toml deploymentOutput && cp deployment/dac.config.toml deploymentOutput && cp deployment/node.config.toml deploymentOutput && cp deployment/deployer.keystore deploymentOutput",
     "saveDeployment:mainnet": "mkdir -p deployments/mainnet_$(date +%s) && cp -r deployment/deploy_*.json deployments/mainnet_$(date +%s) && cp .openzeppelin/mainnet.json deployments/mainnet_$(date +%s) && cp deployment/genesis.json deployments/mainnet_$(date +%s)",
     "test": "npx hardhat test test/contracts/**.test.js",
     "docgen": "npx solidity-docgen --solc-module solc-0.8 -t ./docs/templates -e ./contracts/verifiers,./contracts/mocks",

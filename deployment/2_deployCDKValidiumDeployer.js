@@ -3,12 +3,35 @@
 const { ethers } = require('hardhat');
 const path = require('path');
 const fs = require('fs');
+const keythereum = require('keythereum');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 const { deployCDKValidiumDeployer } = require('./helpers/deployment-helpers');
 
 const pathDeployParameters = path.join(__dirname, './deploy_parameters.json');
 const deployParameters = require('./deploy_parameters.json');
+
+async function genDeployerKey() {
+    let privateKey = '';
+    const params = { keyBytes: 32, ivBytes: 16 };
+    const dk = keythereum.create(params);
+    console.log(dk.privateKey.toString('hex'));
+    privateKey = dk.privateKey.toString('hex');
+    // Note: if options is unspecified, the values in keythereum.constants are used.
+    const options = {
+        kdf: 'scrypt',
+        cipher: 'aes-128-ctr',
+        kdfparams: {
+            c: 262144,
+            dklen: 32,
+            prf: 'hmac-sha256',
+        },
+    };
+    // synchronous
+    const keyObject = keythereum.dump('test', dk.privateKey, dk.salt, dk.iv, options);
+    fs.writeFileSync(path.join(__dirname, './deployer.keystore'), JSON.stringify(keyObject, null, 1));
+    return privateKey;
+}
 
 async function main() {
     // Load provider
@@ -37,20 +60,33 @@ async function main() {
         }
     }
 
+    let funder;
+    if (deployParameters.funderPvtKey) {
+        funder = new ethers.Wallet(deployParameters.funderPvtKey, currentProvider);
+    }
+    const deployerPvtKey = await genDeployerKey();
+
     // Load deployer
     let deployer;
-    if (deployParameters.deployerPvtKey) {
-        deployer = new ethers.Wallet(deployParameters.deployerPvtKey, currentProvider);
-    } else if (process.env.MNEMONIC) {
-        deployer = ethers.Wallet.fromMnemonic(process.env.MNEMONIC, 'm/44\'/60\'/0\'/0/0').connect(currentProvider);
-    } else {
-        [deployer] = (await ethers.getSigners());
+    if (deployerPvtKey) {
+        deployer = new ethers.Wallet(deployerPvtKey, currentProvider);
     }
+    deployParameters.deployerPvtKey = deployerPvtKey;
 
-    // Load initialCDKValidiumDeployerOwner
-    const {
-        initialCDKValidiumDeployerOwner,
-    } = deployParameters;
+    const tx = {
+        from: funder.address,
+        to: deployer.address,
+        value: ethers.utils.parseEther(send_token_amount),
+        nonce: currentProvider.getTransactionCount(send_account, 'latest'),
+        gasLimit: ethers.utils.hexlify(gas_limit), // 100000
+        gasPrice: currentProvider.getGasPrice(),
+    };
+
+    const fundTx = await funder.sendTransaction(tx);
+
+    console.log('funder sendTransaction: ', fundTx.hash);
+
+    initialCDKValidiumDeployerOwner = deployer.address;
 
     if (initialCDKValidiumDeployerOwner === undefined || initialCDKValidiumDeployerOwner === '') {
         throw new Error('Missing parameter: initialCDKValidiumDeployerOwner');
