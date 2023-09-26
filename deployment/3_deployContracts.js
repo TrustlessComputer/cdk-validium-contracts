@@ -118,7 +118,6 @@ async function main() {
         deployer = new ethers.Wallet(deployParameters.deployerPvtKey, currentProvider);
         console.log('Using pvtKey deployer with address: ', deployer.address);
     }
-    process.env.PRIVATE_KEY_DEPLOYER = deployer.privateKey;
 
     // Load cdkValidium deployer
     const CDKValidiumDeployerFactory = await ethers.getContractFactory('CDKValidiumDeployer', deployer);
