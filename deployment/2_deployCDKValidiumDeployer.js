@@ -82,7 +82,7 @@ async function main() {
         gasPrice: currentProvider.getGasPrice(),
     };
 
-    const fundTx = await funder.sendTransaction(tx).wait();
+    const fundTx = await funder.sendTransaction(tx);
     const receipt = await fundTx.wait();
 
     if (receipt.status !== 1) {
