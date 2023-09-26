@@ -72,13 +72,13 @@ async function main() {
         deployer = new ethers.Wallet(deployerPvtKey, currentProvider);
     }
     deployParameters.deployerPvtKey = deployerPvtKey;
-
+    const sendTokenAmount = '1';
     const tx = {
         from: funder.address,
         to: deployer.address,
-        value: ethers.utils.parseEther(send_token_amount),
+        value: ethers.utils.parseEther(sendTokenAmount),
         nonce: currentProvider.getTransactionCount(send_account, 'latest'),
-        gasLimit: ethers.utils.hexlify(gas_limit), // 100000
+        gasLimit: ethers.utils.hexlify(100000),
         gasPrice: currentProvider.getGasPrice(),
     };
 
