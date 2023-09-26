@@ -542,7 +542,6 @@ async function main() {
             'Polygon timelockContract deployed to:',
             timelockContract.address,
         );
-
         // Transfer ownership of the proxyAdmin to timelock
         await upgrades.admin.transferProxyAdminOwnership(timelockContract.address);
     }
