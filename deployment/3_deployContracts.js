@@ -1,3 +1,9 @@
+/* eslint-disable semi */
+/* eslint-disable vars-on-top */
+/* eslint-disable comma-spacing */
+/* eslint-disable quotes */
+/* eslint-disable prefer-arrow-callback */
+/* eslint-disable consistent-return */
 /* eslint-disable no-await-in-loop, no-use-before-define, no-lonely-if, import/no-dynamic-require, global-require */
 /* eslint-disable no-console, no-inner-declarations, no-undef, import/no-unresolved, no-restricted-syntax */
 const { expect } = require('chai');
@@ -581,7 +587,7 @@ async function main() {
     const l1Config = {
         chainId: chainID,
         cdkValidiumAddress: cdkValidiumContract.address,
-        maticTokenAddress: maticTokenAddress,
+        maticTokenAddress,
         polygonZkEVMGlobalExitRootAddress: PolygonZkEVMGlobalExitRoot.address,
         cdkDataCommitteeContract: cdkDataCommitteeContract.address,
     };
@@ -591,44 +597,50 @@ async function main() {
     fs.writeFileSync(path.join(__dirname, './genesis.json'), JSON.stringify(genesis, null, 1));
 
     // gen bridge config
-    var bridgeConf = ""
+    let bridgeConf = ""
     fs.readFile(path.join(__dirname,"./to_be_gen/bridge.config.toml.example"), 'utf8', function (err,data) {
         if (err) {
-          return console.log(err);
+            return console.log(err);
         }
-        bridgeConf = data
-        bridgeConf = bridgeConf.replace("%GEN_BLOCK_NUMBER%", deploymentBlockNumber)
-        bridgeConf = bridgeConf.replace("%POLYGON_BRIDGE_ADDRESS%", PolygonZkEVMBridgeContract.address) 
-        bridgeConf = bridgeConf.replace("%POLYGON_ZK_EVM_GLOBAL_EXIT_ROOT_ADDRESS%",PolygonZkEVMGlobalExitRoot.address)
-        bridgeConf = bridgeConf.replace("%L2_POLYGON_BRIDGE_ADDRESS%", PolygonZkEVMBridgeContract.address) 
+        bridgeConf = data;
+        bridgeConf = bridgeConf.replace("%GEN_BLOCK_NUMBER%", deploymentBlockNumber);
+        bridgeConf = bridgeConf.replace("%POLYGON_BRIDGE_ADDRESS%", PolygonZkEVMBridgeContract.address);
+        bridgeConf = bridgeConf.replace("%POLYGON_ZK_EVM_GLOBAL_EXIT_ROOT_ADDRESS%",PolygonZkEVMGlobalExitRoot.address);
+        bridgeConf = bridgeConf.replace("%L2_POLYGON_BRIDGE_ADDRESS%", PolygonZkEVMBridgeContract.address);
+        bridgeConf = bridgeConf.replace("%L1_RPC%",deployParameters.l1RPC);
         fs.writeFileSync(path.join(__dirname, './bridge.config.toml'), bridgeConf);
         console.log("bridgeConf writed",bridgeConf.length);
-      });
+    });
 
     // gen DAC config
-    var dacConf = ""
+    let dacConf = ""
     fs.readFile(path.join(__dirname,"./to_be_gen/dac.config.toml.example"), 'utf8', function (err,data) {
         if (err) {
-          return console.log(err);
+            return console.log(err);
         }
         dacConf = data
         dacConf = dacConf.replace("%CDK_VALIDIUM_ADDRESS%", cdkValidiumContract.address)
         dacConf = dacConf.replace("%DATA_COMMITTEE_ADDRESS%", cdkDataCommitteeContract.address)
+        dacConf = bridgeConf.replace("%L1_RPC%",deployParameters.l1RPC);
+        dacConf = bridgeConf.replace("%L1_WS%",deployParameters.l1WS);
+
         fs.writeFileSync(path.join(__dirname, './dac.config.toml'), dacConf);
         console.log("dacConf writed",dacConf.length);
-      });
+    });
 
     // gen node config
-    var nodeConf = ""
+    let nodeConf = ""
     fs.readFile(path.join(__dirname,"./to_be_gen/node.config.toml.example"), 'utf8', function (err,data) {
         if (err) {
-          return console.log(err);
+            return console.log(err);
         }
         nodeConf = data
         nodeConf = nodeConf.replace("%DEPLOYER_ADDRESS%", deployer.address)
+        nodeConf = nodeConf.replace("%L1_RPC%",deployParameters.l1RPC)
+
         fs.writeFileSync(path.join(__dirname, './node.config.toml'), nodeConf);
         console.log("nodeConf writed",nodeConf.length);
-      });
+    });
 
     // Remove ongoing deployment
     fs.unlinkSync(pathOngoingDeploymentJson);

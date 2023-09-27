@@ -1,8 +1,8 @@
 PrivateKey = {Path = "/pk/test-member.keystore", Password = "test"}
 
 [L1]
-WsURL = "wss://tc-node-auto.regtest.trustless.computer/ws"
-RpcURL = "https://tc-node-auto.regtest.trustless.computer"
+WsURL = "%L1_WS%"
+RpcURL = "%L1_RPC%"
 CDKValidiumAddress = "%CDK_VALIDIUM_ADDRESS%"
 DataCommitteeAddress = "%DATA_COMMITTEE_ADDRESS%"
 Timeout = "3m"

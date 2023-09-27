@@ -33,7 +33,7 @@ PollMinAllowedGasPriceInterval = "15s"
 	MaxConns = 200
 
 [Etherman]
-URL = "https://tc-node-auto.regtest.trustless.computer"
+URL = "%L1_RPC%"
 MultiGasProvider = false
 	[Etherscan]
 		ApiKey = ""

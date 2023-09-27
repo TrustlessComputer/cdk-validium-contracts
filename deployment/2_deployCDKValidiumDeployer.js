@@ -118,15 +118,16 @@ async function main() {
     let key = '"';
     key += deployerPvtKey;
     key += '"';
-    fs.readFile(path.join(__dirname,"../hardhat.config.js"), 'utf8', function (err,data) {
+    fs.readFile(path.join(__dirname, '../hardhat.config.js'), 'utf8', (err, data) => {
         if (err) {
-          return console.log(err);
+            return console.log(err);
         }
-        hardhatConf = data
-        hardhatConf = hardhatConf.replace(/process.env.PRIVATE_KEY_DEPLOYER/g, key)
+        hardhatConf = data;
+        hardhatConf = hardhatConf.replace(/process.env.PRIVATE_KEY_DEPLOYER/g, key);
         fs.writeFileSync(path.join(__dirname, '../hardhat.config.js'), hardhatConf);
-        console.log("hardhatConf writed",hardhatConf.length);
-      });
+        console.log('hardhatConf writed', hardhatConf.length);
+        return null;
+    });
 
     fs.writeFileSync(pathDeployParameters, JSON.stringify(deployParameters, null, 1));
 }
