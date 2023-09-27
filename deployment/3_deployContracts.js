@@ -621,8 +621,8 @@ async function main() {
         dacConf = data
         dacConf = dacConf.replace("%CDK_VALIDIUM_ADDRESS%", cdkValidiumContract.address)
         dacConf = dacConf.replace("%DATA_COMMITTEE_ADDRESS%", cdkDataCommitteeContract.address)
-        dacConf = bridgeConf.replace("%L1_RPC%",deployParameters.l1RPC);
-        dacConf = bridgeConf.replace("%L1_WS%",deployParameters.l1WS);
+        dacConf = dacConf.replace("%L1_RPC%",deployParameters.l1RPC);
+        dacConf = dacConf.replace("%L1_WS%",deployParameters.l1WS);
 
         fs.writeFileSync(path.join(__dirname, './dac.config.toml'), dacConf);
         console.log("dacConf writed",dacConf.length);
